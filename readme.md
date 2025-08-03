@@ -81,13 +81,18 @@ Example Tables:
 
 Products Table:
 
-| ID  | Name     | Price | Brand     | Branch    | Location    |
-| --- | -------- | ----- | --------- | --------- | ----------- |
-| 1   | Pen      | 20.5  | National  | Main      | New York    |
-| 2   | Pencil   | 10.5  | National  | Secondary | Los Angeles |
-| 3   | Notebook | 40.0  | Classmate | Main      | Chicago     |
-| 4   | Eraser   | 10.5  | National  | Main      | Houston     |
-| 5   | Marker   | 60.0  | National  | Secondary | Phoenix     |
+| ID  | Name        | Price | Brand     | Branch    | Location    |
+| --- | ----------- | ----- | --------- | --------- | ----------- |
+| 1   | Pen         | 20.5  | National  | Main      | New York    |
+| 2   | Pencil      | 10.5  | National  | Secondary | Los Angeles |
+| 3   | Notebook    | 40.0  | Classmate | Main      | Chicago     |
+| 4   | Eraser      | 10.5  | National  | Main      | Houston     |
+| 5   | Marker      | 60.0  | National  | Secondary | Phoenix     |
+| 6   | Sharpener   | 15.0  | Monami    | Main      | New York    |
+| 7   | Ruler       | 25.0  | National  | Secondary | Los Angeles |
+| 8   | Highlighter | 30.0  | National  | Main      | Chicago     |
+| 9   | Glue        | 20.0  | National  | Main      | Houston     |
+| 10  | Tape        | 15.0  | National  | Secondary | Phoenix     |
 
 To create a table:
 
@@ -112,4 +117,43 @@ or
 
 ```sql
 desc products;
+```
+
+To insert records into a table:
+
+```sql
+insert into products values
+(2, 'Pencil', 10.5, 'National', 'Secondary', 'Los Angeles'),
+(3, 'Notebook', 40.0, 'Classmate', 'Main', 'Chicago'),
+(4, 'Eraser', 10.5, 'National', 'Main', 'Houston'),
+(5, 'Marker', 60.0, 'National', 'Secondary', 'Phoenix'),
+(6, 'Sharpener', 15.0, 'Monami', 'Main', 'New York'),
+(7, 'Ruler', 25.0, 'National', 'Secondary', 'Los Angeles'),
+(8, 'Highlighter', 30.0, 'National', 'Main', 'Chicago'),
+(9, 'Glue', 20.0, 'National', 'Main', 'Houston'),
+(10, 'Tape', 15.0, 'National', 'Secondary', 'Phoenix');
+```
+
+To add a new column to a table:
+
+```sql
+alter table Products add column category varchar(20);
+```
+
+To rename a column in a table:
+
+```sql
+alter table Products change category type varchar(20);
+```
+
+To modify a column type in a table:
+
+```sql
+alter table Products modify type varchar(50);
+```
+
+To drop a column from a table:
+
+```sql
+alter table Products drop column type;
 ```
