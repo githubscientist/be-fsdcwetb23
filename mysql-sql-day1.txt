@@ -1,0 +1,149 @@
+mysql> select version();
++-----------+
+| version() |
++-----------+
+| 8.0.41    |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2025-08-03 11:49:42 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database fsdcwetb23;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| fsdcwetb23         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> drop database fsdcwetb23;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> create database fsdcwetb23;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| fsdcwetb23         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> select database();
++------------+
+| database() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> use fsdcwetb23;
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| fsdcwetb23 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table Products 
+    -> ;       
+;
+^C
+mysql> create table Products (
+    -> ID int,
+    -> Name char(50),
+    -> Price decimal(10, 2),
+    -> Brand varchar(20),
+    -> Branch varchar(20),
+    -> Location varchar(20)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++----------------------+
+| Tables_in_fsdcwetb23 |
++----------------------+
+| Products             |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> describe Products;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ID       | int           | YES  |     | NULL    |       |
+| Name     | char(50)      | YES  |     | NULL    |       |
+| Price    | decimal(10,2) | YES  |     | NULL    |       |
+| Brand    | varchar(20)   | YES  |     | NULL    |       |
+| Branch   | varchar(20)   | YES  |     | NULL    |       |
+| Location | varchar(20)   | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> desc Products;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ID       | int           | YES  |     | NULL    |       |
+| Name     | char(50)      | YES  |     | NULL    |       |
+| Price    | decimal(10,2) | YES  |     | NULL    |       |
+| Brand    | varchar(20)   | YES  |     | NULL    |       |
+| Branch   | varchar(20)   | YES  |     | NULL    |       |
+| Location | varchar(20)   | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> 
