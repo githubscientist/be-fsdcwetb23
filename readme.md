@@ -101,3 +101,15 @@ CREATE TABLE products (
     location VARCHAR(20)
 );
 ```
+
+To get the structure of a table:
+
+```sql
+DESCRIBE products;
+```
+
+or
+
+```sql
+desc products;
+```
