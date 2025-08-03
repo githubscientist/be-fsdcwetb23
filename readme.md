@@ -94,7 +94,7 @@ To create a table:
 ```sql
 CREATE TABLE products (
     id INT,
-    name car(50),
+    name char(50),
     price DECIMAL(10, 2),
     brand VARCHAR(20),
     branch VARCHAR(20),
