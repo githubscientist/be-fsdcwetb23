@@ -283,3 +283,82 @@ To skip the first 5 records and return the next 2:
 SELECT * FROM products LIMIT 2 OFFSET 5;
 
 ```
+
+Relational Databases:
+
+Relational databases use tables to store data and establish relationships between them. Each table has a primary key that uniquely identifies each record.
+
+To insert a new record into the products table:
+
+```sql
+INSERT INTO products (id, name, price, brand, branch, location) VALUES (11, 'Stapler', 35.0, 'National', 'Main', 'San Francisco');
+```
+
+Constraints in SQL:
+
+Constraints are rules applied to columns in a table to ensure data integrity. Common constraints include:
+
+- **NOT NULL**: Ensures that a column cannot have a NULL value.
+- **UNIQUE**: Ensures that all values in a column are unique.
+- **PRIMARY KEY**: Uniquely identifies each record in a table.
+- **FOREIGN KEY**: Establishes a relationship between two tables.
+
+Normalization:
+
+Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves dividing a database into multiple tables and defining relationships between them.
+
+To create Orders table with a foreign key reference to Products:
+
+```sql
+create table Orders (
+    order_id int primary key,
+    product_id int,
+    quantity int,
+    customer_name varchar(50),
+    foreign key (product_id) references products(id)
+)
+```
+
++----+-------------+-------+----------------+
+| order_id | product_id | quantity | customer_name
++----+-------------+-------+----------------+
+| 101 | 1 | 10 | XYZ |
+| 102 | 1 | 20 | ABC |
+| 103 | 2 | 15 | XYZ |
+
+```sql
+insert into Orders values
+(101, 1, 10, 'XYZ'),
+(102, 1, 20, 'ABC'),
+(103, 2, 15, 'XYZ');
+```
+
+Question:
+
+Find the product name ordered by customer 'ABC'.
+
+```sql
+select product_id from orders where customer_name = 'ABC';
+```
+
+```sql
+select name from products where id = 1;
+```
+
+or
+
+```sql
+select name from products where id = (select product_id from orders where customer_name = 'ABC');
+```
+
+Answer: Joins
+
+Joins are used to combine records from two or more tables based on a related column between them.
+
+Joins Types:
+
+- Inner Join: Combines records that have matching values in both tables.
+- Outer Join
+  - Left Outer Join: Returns all records from the left table and matched records from the right table. If there is no match, NULL values are returned for columns from the right table.
+  - Right Outer Join: Returns all records from the right table and matched records from the left table. If there is no match, NULL values are returned for columns from the left table.
+  - Full Outer Join: Returns all records when there is a match in either left or right table records. If there is no match, NULL values are returned for columns from the table without a match.

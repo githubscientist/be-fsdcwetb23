@@ -739,3 +739,35 @@ mysql> select * from products order by name;
 |   10 | Tape        | 15.00 | National  | Secondary | Phoenix     |
 +------+-------------+-------+-----------+-----------+-------------+
 10 rows in set (0.00 sec)
+
+Products
+
++----+-------------+-------+-----------+-----------+-------------
+| id | name        | Price | Brand     | branch    | location    
++----+-------------+-------+-----------+-------------+-----------
+|  1 | Pen         | 20.50 | National  | Main      | New York    
+|  2 | Pencil      | 10.50 | National  | Secondary | Los Angeles 
+|  3 | Notebook    | 40.00 | Classmate | Main      | Chicago     
+|  4 | Eraser      | 10.50 | National  | Main      | Houston     
+|  5 | Marker      | 60.00 | National  | Secondary | Phoenix     
+|  6 | Sharpener   | 15.00 | Classmate | Main      | New York    
+|  7 | Ruler       | 25.00 | National  | Secondary | Los Angeles 
+|  8 | Highlighter | 30.00 | National  | Main      | Chicago     
+|  9 | Glue        | 20.00 | National  | Main      | Houston     
+| 10 | Tape        | 15.00 | National  | Secondary | Phoenix     
+| 11 | Stapler     | 35.00 | National  | Main      | New York    
+
+Orders
+
++----+-------------+-------+----------------+
+| order_id | product_id | quantity | customer_name
++----+-------------+-------+----------------+
+| 101 | 1         | 10       | XYZ          |
+| 102 | 1         | 20       | ABC          |
+| 103 | 2         | 15       | XYZ          |
+
+Pen 10 Main NewYork XYZ
+Pen 20 Main NewYork ABC
+
+
+select name from products where customer_name = 'XYZ';
