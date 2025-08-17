@@ -425,3 +425,221 @@ products left join orders on products.id = orders.product_id
 union
 select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name from products right join orders on products.id = orders.product_id;
 ```
+
+MongoDB:
+
+- NoSQL database that stores data in JSON-like documents.
+- It is schema-less, allowing for flexible data structures.
+- MongoDB is designed for scalability and high performance.
+
+### MongoDB Queries
+
+To list all the databases:
+
+```javascript
+show dbs;
+```
+
+or
+
+```javascript
+show databases;
+```
+
+To see the current database:
+
+```javascript
+db;
+```
+
+To create a new database:
+
+```javascript
+use fsdcwetb23;
+```
+
+To list all collections in the current database:
+
+```javascript
+show collections;
+```
+
+To create a new collection:
+
+```javascript
+db.createCollection("products");
+```
+
+To insert a document into a collection:
+
+```javascript
+db.products.insertOne({
+  name: "Pen",
+  price: 20.5,
+  brand: "National",
+  branch: "Main",
+  location: "New York",
+});
+```
+
+To insert multiple documents into a collection:
+
+```javascript
+db.products.insertMany([
+  {
+    name: "Pencil",
+    price: 10.5,
+    brand: "National",
+    branch: "Secondary",
+    location: "Los Angeles",
+  },
+  {
+    name: "Notebook",
+    price: 40.0,
+    brand: "Classmate",
+    branch: "Main",
+    location: "Chicago",
+  },
+  {
+    name: "Eraser",
+    price: 10.5,
+    brand: "National",
+    branch: "Main",
+    location: "Houston",
+  },
+  {
+    name: "Marker",
+    price: 60.0,
+    brand: "National",
+    branch: "Secondary",
+    location: "Phoenix",
+  },
+  {
+    name: "Sharpener",
+    price: 15.0,
+    brand: "Monami",
+    branch: "Main",
+    location: "New York",
+  },
+  {
+    name: "Ruler",
+    price: 25.0,
+    brand: "National",
+    branch: "Secondary",
+    location: "Los Angeles",
+  },
+  {
+    name: "Highlighter",
+    price: 30.0,
+    brand: "National",
+    branch: "Main",
+    location: "Chicago",
+  },
+  {
+    name: "Glue",
+    price: 20.0,
+    brand: "National",
+    branch: "Main",
+    location: "Houston",
+  },
+  {
+    name: "Tape",
+    price: 15.0,
+    brand: "National",
+    branch: "Secondary",
+    location: "Phoenix",
+  },
+]);
+```
+
+To select particular fields from a collection:
+
+```javascript
+db.products.find(
+  {},
+  {
+    _id: 0,
+    name: 1,
+    price: 1,
+  }
+);
+```
+
+To filter documents based on conditions:
+
+```javascript
+db.products.find(
+  { branch: "Main" },
+  {
+    _id: 0,
+    name: 1,
+    price: 1,
+  }
+);
+```
+
+To select documents with price greater than 30:
+
+```javascript
+db.products.find(
+  {
+    price: {
+      $gte: 30,
+    },
+  },
+  {
+    _id: 0,
+    name: 1,
+    price: 1,
+  }
+);
+```
+
+List of Operators in MongoDB:
+
+- `$eq`: Equal to
+- `$ne`: Not equal to
+- `$gt`: Greater than
+- `$gte`: Greater than or equal to
+- `$lt`: Less than
+- `$lte`: Less than or equal to
+- `$in`: Matches any value in an array
+- `$nin`: Not in an array
+- `$and`: Logical AND
+- `$or`: Logical OR
+- `$not`: Logical NOT
+
+```javascript
+db.products.find(
+  {
+    $and: [
+      {
+        price: {
+          $gte: 25,
+        },
+        price: {
+          $lte: 50,
+        },
+      },
+    ],
+  },
+  {
+    _id: 0,
+    name: 1,
+    price: 1,
+  }
+);
+```
+
+```
+db.products.updateOne(
+  {
+    branch: 'Main'
+  },
+  {
+    $set: {
+      price: 35.0
+    }
+  }
+)
+```
