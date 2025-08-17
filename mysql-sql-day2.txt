@@ -771,3 +771,195 @@ Pen 20 Main NewYork ABC
 
 
 select name from products where customer_name = 'XYZ';
+
+mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.41 Homebrew
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databasesl
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databasesl' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| fsdcwetb23         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.03 sec)
+
+mysql> use fsdcwetb23;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| fsdcwetb23 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show tables
+    -> ;
++----------------------+
+| Tables_in_fsdcwetb23 |
++----------------------+
+| Orders               |
+| products             |
++----------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc orders;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| order_id      | int         | NO   | PRI | NULL    |       |
+| product_id    | int         | YES  | MUL | NULL    |       |
+| quantity      | int         | YES  |     | NULL    |       |
+| customer_name | varchar(50) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc products;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| id       | int           | NO   | PRI | NULL    |       |
+| name     | char(50)      | YES  | UNI | NULL    |       |
+| Price    | decimal(10,2) | YES  |     | NULL    |       |
+| Brand    | varchar(20)   | YES  |     | NULL    |       |
+| branch   | varchar(20)   | NO   |     | NULL    |       |
+| location | varchar(20)   | NO   |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from orders;
++----------+------------+----------+---------------+
+| order_id | product_id | quantity | customer_name |
++----------+------------+----------+---------------+
+|      101 |          1 |       10 | XYZ           |
+|      102 |          1 |       20 | ABC           |
+|      103 |          2 |       15 | XYZ           |
++----------+------------+----------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from products;
++----+-------------+-------+-----------+-----------+-------------+
+| id | name        | Price | Brand     | branch    | location    |
++----+-------------+-------+-----------+-----------+-------------+
+|  1 | Pen         | 20.50 | National  | Main      | New York    |
+|  2 | Pencil      | 10.50 | National  | Secondary | Los Angeles |
+|  3 | Notebook    | 40.00 | Classmate | Main      | Chicago     |
+|  4 | Eraser      | 10.50 | National  | Main      | Houston     |
+|  5 | Marker      | 60.00 | National  | Secondary | Phoenix     |
+|  6 | Sharpener   | 15.00 | Classmate | Main      | New York    |
+|  7 | Ruler       | 25.00 | National  | Secondary | Los Angeles |
+|  8 | Highlighter | 30.00 | National  | Main      | Chicago     |
+|  9 | Glue        | 20.00 | National  | Main      | Houston     |
+| 10 | Tape        | 15.00 | National  | Secondary | Phoenix     |
+| 11 | Stapler     | 35.00 | National  | Main      | New York    |
++----+-------------+-------+-----------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name 
+    -> from products
+    -> inner join
+    -> orders
+    -> on products.id = orders.product_id;
++--------+-------+----------+-------------+---------------+
+| name   | price | quantity | totalAmount | customer_name |
++--------+-------+----------+-------------+---------------+
+| Pen    | 20.50 |       10 |      205.00 | XYZ           |
+| Pen    | 20.50 |       20 |      410.00 | ABC           |
+| Pencil | 10.50 |       15 |      157.50 | XYZ           |
++--------+-------+----------+-------------+---------------+
+3 rows in set (0.01 sec)
+
+mysql> select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name  from products inner join orders on products.id = orders.product_id order by totalAmount desc limit 1;
++------+-------+----------+-------------+---------------+
+| name | price | quantity | totalAmount | customer_name |
++------+-------+----------+-------------+---------------+
+| Pen  | 20.50 |       20 |      410.00 | ABC           |
++------+-------+----------+-------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customer_name 
+    -> from products as p
+    -> join
+    -> orders as o
+    -> on p.id = o.product_id order by totalAmount desc;
++--------+-------+----------+-------------+---------------+
+| name   | price | quantity | totalAmount | customer_name |
++--------+-------+----------+-------------+---------------+
+| Pen    | 20.50 |       20 |      410.00 | ABC           |
+| Pen    | 20.50 |       10 |      205.00 | XYZ           |
+| Pencil | 10.50 |       15 |      157.50 | XYZ           |
++--------+-------+----------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> mysql> select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customefrom products as p left join orders as o on p.id = o.product_id order by totalAmount desc;
++-------------+-------+----------+-------------+---------------+
+| name        | price | quantity | totalAmount | customer_name |
++-------------+-------+----------+-------------+---------------+
+| Pen         | 20.50 |       20 |      410.00 | ABC           |
+| Pen         | 20.50 |       10 |      205.00 | XYZ           |
+| Pencil      | 10.50 |       15 |      157.50 | XYZ           |
+| Notebook    | 40.00 |     NULL |        NULL | NULL          |
+| Eraser      | 10.50 |     NULL |        NULL | NULL          |
+| Marker      | 60.00 |     NULL |        NULL | NULL          |
+| Sharpener   | 15.00 |     NULL |        NULL | NULL          |
+| Ruler       | 25.00 |     NULL |        NULL | NULL          |
+| Highlighter | 30.00 |     NULL |        NULL | NULL          |
+| Glue        | 20.00 |     NULL |        NULL | NULL          |
+| Tape        | 15.00 |     NULL |        NULL | NULL          |
+| Stapler     | 35.00 |     NULL |        NULL | NULL          |
++-------------+-------+----------+-------------+---------------+
+12 rows in set (0.00 sec)
+
+mysql> select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customer_name from products as p right join orders as o on p.id = o.product_id order by totalAmount desc;
++--------+-------+----------+-------------+---------------+
+| name   | price | quantity | totalAmount | customer_name |
++--------+-------+----------+-------------+---------------+
+| Pen    | 20.50 |       20 |      410.00 | ABC           |
+| Pen    | 20.50 |       10 |      205.00 | XYZ           |
+| Pencil | 10.50 |       15 |      157.50 | XYZ           |
++--------+-------+----------+-------------+---------------+
+3 rows in set (0.00 sec)
+
+select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name from
+    -> products left join orders on products.id = orders.product_id
+    -> union
+    -> select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name from products right join orders on products.id = orders.product_id;
++-------------+-------+----------+-------------+---------------+
+| name        | price | quantity | totalAmount | customer_name |
++-------------+-------+----------+-------------+---------------+
+| Pen         | 20.50 |       20 |      410.00 | ABC           |
+| Pen         | 20.50 |       10 |      205.00 | XYZ           |
+| Pencil      | 10.50 |       15 |      157.50 | XYZ           |
+| Notebook    | 40.00 |     NULL |        NULL | NULL          |
+| Eraser      | 10.50 |     NULL |        NULL | NULL          |
+| Marker      | 60.00 |     NULL |        NULL | NULL          |
+| Sharpener   | 15.00 |     NULL |        NULL | NULL          |
+| Ruler       | 25.00 |     NULL |        NULL | NULL          |
+| Highlighter | 30.00 |     NULL |        NULL | NULL          |
+| Glue        | 20.00 |     NULL |        NULL | NULL          |
+| Tape        | 15.00 |     NULL |        NULL | NULL          |
+| Stapler     | 35.00 |     NULL |        NULL | NULL          |
++-------------+-------+----------+-------------+---------------+
+12 rows in set (0.01 sec)

@@ -362,3 +362,66 @@ Joins Types:
   - Left Outer Join: Returns all records from the left table and matched records from the right table. If there is no match, NULL values are returned for columns from the right table.
   - Right Outer Join: Returns all records from the right table and matched records from the left table. If there is no match, NULL values are returned for columns from the left table.
   - Full Outer Join: Returns all records when there is a match in either left or right table records. If there is no match, NULL values are returned for columns from the table without a match.
+
++----------+------------+----------+---------------+
+| order_id | product_id | quantity | customer_name |
++----------+------------+----------+---------------+
+| 101 | 1 | 10 | XYZ |
+| 102 | 1 | 20 | ABC |
+| 103 | 2 | 15 | XYZ |
++----------+------------+----------+---------------+
+
++----+-------------+-------+-----------+-----------+-------------+
+| id | name | Price | Brand | branch | location |
++----+-------------+-------+-----------+-----------+-------------+
+| 1 | Pen | 20.50 | National | Main | New York |
+| 2 | Pencil | 10.50 | National | Secondary | Los Angeles |
+| 3 | Notebook | 40.00 | Classmate | Main | Chicago |
+| 4 | Eraser | 10.50 | National | Main | Houston |
+| 5 | Marker | 60.00 | National | Secondary | Phoenix |
+| 6 | Sharpener | 15.00 | Classmate | Main | New York |
+| 7 | Ruler | 25.00 | National | Secondary | Los Angeles |
+| 8 | Highlighter | 30.00 | National | Main | Chicago |
+| 9 | Glue | 20.00 | National | Main | Houston |
+| 10 | Tape | 15.00 | National | Secondary | Phoenix |
+| 11 | Stapler | 35.00 | National | Main | New York |
++----+-------------+-------+-----------+-----------+-------------+
+
+Pen 20.50 10 410.00 XYZ
+Pen 20.50 20 205.00 ABC
+Pencil 10.50 15 157.50 XYZ
+
+Inner Join Example:
+
+```sql
+select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name  from products inner join orders on products.id = orders.product_id order by totalAmount desc limit 1;
+```
+
+Left Outer Join Example:
+
+```sql
+select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customefrom products as p left join orders as o on p.id = o.product_id order by totalAmount desc;
+```
+
+Right Outer Join Example:
+
+```sql
+select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customer_name from products as p right join orders as o on p.id = o.product_id order by totalAmount desc;
+```
+
+Full Outer Join Example using UNION:
+
+```sql
+select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customer_name from products as p left join orders as o on p.id = o.product_id order
+union
+select p.name, p.price, o.quantity, o.quantity * p.price as totalAmount, o.customer_name from products as p right join orders as o on p.id = o.product_id;
+```
+
+without alias:
+
+```sql
+select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name from
+products left join orders on products.id = orders.product_id
+union
+select products.name, products.price, orders.quantity, orders.quantity * products.price as totalAmount, orders.customer_name from products right join orders on products.id = orders.product_id;
+```
