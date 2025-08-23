@@ -643,3 +643,80 @@ db.products.updateOne(
   }
 )
 ```
+
+Aggregation and Pipelines in MongoDB:
+
+To find the count of documents in a collection:
+
+```javascript
+db.products.countDocuments();
+```
+
+or
+
+```javascript
+db.products.aggregate([
+  {
+    $count: "total_count",
+  },
+]);
+```
+
+To find the total price of all products:
+
+```javascript
+db.products.aggregate([
+  {
+    $group: {
+      _id: null,
+      total_price: {
+        $sum: "$price",
+      },
+    },
+  },
+]);
+```
+
+To find the total price of products branch wise:
+
+```javascript
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$branch",
+      total_price: {
+        $sum: "$price",
+      },
+    },
+  },
+]);
+```
+
+To sort documents by price in ascending order after grouping with sum based on location:
+
+```javascript
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$location",
+      totalPrice: {
+        $sum: "$price",
+      },
+      avgPrice: {
+        $avg: "$price",
+      },
+      min_price: {
+        $min: "$price",
+      },
+    },
+  },
+  {
+    $sort: {
+      totalPrice: -1,
+    },
+  },
+  {
+    $limit: 3,
+  },
+]);
+```

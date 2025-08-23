@@ -1,0 +1,305 @@
+Atlas atlas - lzypu6 - shard - 0[primary] test > use fsdcwetb23
+switched to db fsdcwetb23
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > show collections;
+products
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.find();
+[
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa2'),
+        name: 'Pencil',
+        price: 10.5,
+        brand: 'National',
+        branch: 'Secondary',
+        location: 'Los Angeles'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa3'),
+        name: 'Notebook',
+        price: 40,
+        brand: 'Classmate',
+        branch: 'Main',
+        location: 'Chicago'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa4'),
+        name: 'Eraser',
+        price: 10.5,
+        brand: 'National',
+        branch: 'Main',
+        location: 'Houston'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa5'),
+        name: 'Marker',
+        price: 60,
+        brand: 'National',
+        branch: 'Secondary',
+        location: 'Phoenix'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa6'),
+        name: 'Sharpener',
+        price: 15,
+        brand: 'Monami',
+        branch: 'Main',
+        location: 'New York'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa7'),
+        name: 'Ruler',
+        price: 25,
+        brand: 'National',
+        branch: 'Secondary',
+        location: 'Los Angeles'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa8'),
+        name: 'Highlighter',
+        price: 30,
+        brand: 'National',
+        branch: 'Main',
+        location: 'Chicago'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaa9'),
+        name: 'Glue',
+        price: 20,
+        brand: 'National',
+        branch: 'Main',
+        location: 'Houston'
+    },
+    {
+        _id: ObjectId('68a17ea4765380dfd47fdaaa'),
+        name: 'Tape',
+        price: 15,
+        brand: 'National',
+        branch: 'Secondary',
+        location: 'Phoenix'
+    }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.countDocuments();
+9
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$count: "total_count",
+        ...   },
+    ... ]);
+[{ total_count: 9 }]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: null,
+        ...     },
+    ...total_price: {
+        ...$sum: "$price",
+        ...     },
+    ...   },
+    ... ]);
+MongoServerError[Location40323]: A pipeline stage specification object must contain exactly one field.
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: null,
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ... ]);
+[{ _id: null, total_price: 226 }]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$branch",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ... ]);
+[
+    { _id: 'Secondary', total_price: 110.5 },
+    { _id: 'Main', total_price: 115.5 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+        ...total_price: 1,
+        ...     },
+    ...   },
+    ... ]);
+[
+    { _id: 'New York', total_price: 15 },
+    { _id: 'Houston', total_price: 30.5 },
+    { _id: 'Los Angeles', total_price: 35.5 },
+    { _id: 'Chicago', total_price: 70 },
+    { _id: 'Phoenix', total_price: 75 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ... ]);
+[
+    { _id: 'Phoenix', total_price: 75 },
+    { _id: 'Chicago', total_price: 70 },
+    { _id: 'Los Angeles', total_price: 35.5 },
+    { _id: 'Houston', total_price: 30.5 },
+    { _id: 'New York', total_price: 15 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ...   {
+        ...$limit: 3,
+        ...   },
+    ... ]);
+[
+    { _id: 'Phoenix', total_price: 75 },
+    { _id: 'Chicago', total_price: 70 },
+    { _id: 'Los Angeles', total_price: 35.5 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...$avg: { $avg: "$price" },
+    ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ...   {
+        ...$limit: 3,
+        ...   },
+    ... ]);
+MongoServerError[Location40238]: The field 'total_price' must specify one accumulator: total_price: { $sum: "$price", $avg: { $avg: "$price" } }
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...avg_price: {
+        ...$avg: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ...   {
+        ...$limit: 3,
+        ...   },
+    ... ]);
+[
+    { _id: 'Phoenix', total_price: 75, avg_price: 37.5 },
+    { _id: 'Chicago', total_price: 70, avg_price: 35 },
+    { _id: 'Los Angeles', total_price: 35.5, avg_price: 17.75 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...total_price: {
+        ...$sum: "$price",
+        ...       },
+    ...avg_price: {
+        ...$avg: "$price",
+        ...       },
+    ...min_price: {
+        ...$min: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ...   {
+        ...$limit: 3,
+        ...   },
+    ... ]);
+[
+    { _id: 'Phoenix', total_price: 75, avg_price: 37.5, min_price: 15 },
+    { _id: 'Chicago', total_price: 70, avg_price: 35, min_price: 30 },
+    {
+        _id: 'Los Angeles',
+        total_price: 35.5,
+        avg_price: 17.75,
+        min_price: 10.5
+    }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > db.products.aggregate([
+    ...   {
+        ...$group: {
+        ..._id: "$location",
+        ...totalPrice: {
+        ...$sum: "$price",
+        ...       },
+    ...avgPrice: {
+        ...$avg: "$price",
+        ...       },
+    ...min_price: {
+        ...$min: "$price",
+        ...       },
+    ...     },
+    ...   },
+    ...   {
+        ...$sort: {
+            ...total_price: - 1,
+    ...     },
+    ...   },
+    ...   {
+        ...$limit: 3,
+        ...   },
+    ... ]);
+[
+    { _id: 'Chicago', totalPrice: 70, avgPrice: 35, min_price: 30 },
+    {
+        _id: 'Los Angeles',
+        totalPrice: 35.5,
+        avgPrice: 17.75,
+        min_price: 10.5
+    },
+    { _id: 'New York', totalPrice: 15, avgPrice: 15, min_price: 15 }
+]
+Atlas atlas - lzypu6 - shard - 0[primary] fsdcwetb23 > 

@@ -1,0 +1,231 @@
+mysql 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.41 Homebrew
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select database();
++------------+
+| database() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsdcwdtb19         |
+| fsdcwdtb27         |
+| fsdcwetb23         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.03 sec)
+
+mysql> use fsdcwetb23;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_fsdcwetb23 |
++----------------------+
+| Orders               |
+| products             |
++----------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from products;
++----+-------------+-------+-----------+-----------+-------------+
+| id | name        | Price | Brand     | branch    | location    |
++----+-------------+-------+-----------+-----------+-------------+
+|  1 | Pen         | 20.50 | National  | Main      | New York    |
+|  2 | Pencil      | 10.50 | National  | Secondary | Los Angeles |
+|  3 | Notebook    | 40.00 | Classmate | Main      | Chicago     |
+|  4 | Eraser      | 10.50 | National  | Main      | Houston     |
+|  5 | Marker      | 60.00 | National  | Secondary | Phoenix     |
+|  6 | Sharpener   | 15.00 | Classmate | Main      | New York    |
+|  7 | Ruler       | 25.00 | National  | Secondary | Los Angeles |
+|  8 | Highlighter | 30.00 | National  | Main      | Chicago     |
+|  9 | Glue        | 20.00 | National  | Main      | Houston     |
+| 10 | Tape        | 15.00 | National  | Secondary | Phoenix     |
+| 11 | Stapler     | 35.00 | National  | Main      | New York    |
++----+-------------+-------+-----------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select count(*) from products;
++----------+
+| count(*) |
++----------+
+|       11 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(price) from products;
++------------+
+| sum(price) |
++------------+
+|     281.50 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select brand, count(*) from products group by brand;
++-----------+----------+
+| brand     | count(*) |
++-----------+----------+
+| National  |        9 |
+| Classmate |        2 |
++-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select brand, location, count(*) from products group by brand, location; 
++-----------+-------------+----------+
+| brand     | location    | count(*) |
++-----------+-------------+----------+
+| National  | New York    |        2 |
+| National  | Los Angeles |        2 |
+| Classmate | Chicago     |        1 |
+| National  | Houston     |        2 |
+| National  | Phoenix     |        2 |
+| Classmate | New York    |        1 |
+| National  | Chicago     |        1 |
++-----------+-------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from products
+    -> ;
++----+-------------+-------+-----------+-----------+-------------+
+| id | name        | Price | Brand     | branch    | location    |
++----+-------------+-------+-----------+-----------+-------------+
+|  1 | Pen         | 20.50 | National  | Main      | New York    |
+|  2 | Pencil      | 10.50 | National  | Secondary | Los Angeles |
+|  3 | Notebook    | 40.00 | Classmate | Main      | Chicago     |
+|  4 | Eraser      | 10.50 | National  | Main      | Houston     |
+|  5 | Marker      | 60.00 | National  | Secondary | Phoenix     |
+|  6 | Sharpener   | 15.00 | Classmate | Main      | New York    |
+|  7 | Ruler       | 25.00 | National  | Secondary | Los Angeles |
+|  8 | Highlighter | 30.00 | National  | Main      | Chicago     |
+|  9 | Glue        | 20.00 | National  | Main      | Houston     |
+| 10 | Tape        | 15.00 | National  | Secondary | Phoenix     |
+| 11 | Stapler     | 35.00 | National  | Main      | New York    |
++----+-------------+-------+-----------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select sum(price) from products;
++------------+
+| sum(price) |
++------------+
+|     281.50 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(location) as total_price from products group by location; 
++-------------+
+| total_price |
++-------------+
+|           0 |
+|           0 |
+|           0 |
+|           0 |
+|           0 |
++-------------+
+5 rows in set, 11 warnings (0.01 sec)
+
+mysql> select sum(price) as total_price from products group by location; 
++-------------+
+| total_price |
++-------------+
+|       70.50 |
+|       35.50 |
+|       70.00 |
+|       30.50 |
+|       75.00 |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(price) as total_price from products group by location order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select sum(price) as total_price from products group by location order by total_price asc;
++-------------+
+| total_price |
++-------------+
+|       30.50 |
+|       35.50 |
+|       70.00 |
+|       70.50 |
+|       75.00 |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> select sum(price) as total_price from products group by location order by total_price desc;
++-------------+
+| total_price |
++-------------+
+|       75.00 |
+|       70.50 |
+|       70.00 |
+|       35.50 |
+|       30.50 |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> select location, sum(price) as total_price from products group by location order by total_price desc;
++-------------+-------------+
+| location    | total_price |
++-------------+-------------+
+| Phoenix     |       75.00 |
+| New York    |       70.50 |
+| Chicago     |       70.00 |
+| Los Angeles |       35.50 |
+| Houston     |       30.50 |
++-------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select location, sum(price) as total_price from products group by location order by total_price desc limit 3;
++----------+-------------+
+| location | total_price |
++----------+-------------+
+| Phoenix  |       75.00 |
+| New York |       70.50 |
+| Chicago  |       70.00 |
++----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from products;
++----+-------------+-------+-----------+-----------+-------------+
+| id | name        | Price | Brand     | branch    | location    |
++----+-------------+-------+-----------+-----------+-------------+
+|  1 | Pen         | 20.50 | National  | Main      | New York    |
+|  2 | Pencil      | 10.50 | National  | Secondary | Los Angeles |
+|  3 | Notebook    | 40.00 | Classmate | Main      | Chicago     |
+|  4 | Eraser      | 10.50 | National  | Main      | Houston     |
+|  5 | Marker      | 60.00 | National  | Secondary | Phoenix     |
+|  6 | Sharpener   | 15.00 | Classmate | Main      | New York    |
+|  7 | Ruler       | 25.00 | National  | Secondary | Los Angeles |
+|  8 | Highlighter | 30.00 | National  | Main      | Chicago     |
+|  9 | Glue        | 20.00 | National  | Main      | Houston     |
+| 10 | Tape        | 15.00 | National  | Secondary | Phoenix     |
+| 11 | Stapler     | 35.00 | National  | Main      | New York    |
++----+-------------+-------+-----------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from products where location='Phoenix';
++----+--------+-------+----------+-----------+----------+
+| id | name   | Price | Brand    | branch    | location |
++----+--------+-------+----------+-----------+----------+
+|  5 | Marker | 60.00 | National | Secondary | Phoenix  |
+| 10 | Tape   | 15.00 | National | Secondary | Phoenix  |
++----+--------+-------+----------+-----------+----------+
+2 rows in set (0.00 sec)
