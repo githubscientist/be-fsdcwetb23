@@ -1,0 +1,40 @@
+{
+  "name": "be-fsdcwetb23",
+  "version": "1.0.0",
+  "description": "Backend Application using NodeJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/githubscientist/be-fsdcwetb23.git"
+  },
+  "keywords": [
+    "nodejs",
+    "expressjs",
+    "mongodb",
+    "mongoose",
+    "http",
+    "server",
+    "restful",
+    "api",
+    "jwt",
+    "token",
+    "authentication"
+  ],
+  "author": "Sathish Gnanaprakasam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/githubscientist/be-fsdcwetb23/issues"
+  },
+  "homepage": "https://github.com/githubscientist/be-fsdcwetb23#readme",
+  "dependencies": {
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
