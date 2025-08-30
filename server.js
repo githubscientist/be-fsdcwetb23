@@ -4,7 +4,9 @@ const http = require('http');
 
 // create a server object
 const server = http.createServer((request, response) => {
-    response.end('Hello World\n');
+    // set the response HTTP header with HTTP status and Content type
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.end('<h1>Hello World</h1><p>This is my first NodeJS server</p>');
 });
 
 // start the server and listen on port 3001

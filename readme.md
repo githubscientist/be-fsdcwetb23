@@ -77,3 +77,25 @@ DevDependencies are the libraries or modules that are only required for developm
   - logger.js: a module for logging messages
   - auth.js: a module for handling authentication and authorization
   - errorHandler.js: a module for handling errors in the application
+
+#### Why use express.js over node.js http module?
+
+- Express.js is a web framework for Node.js that provides a set of features and tools for building web applications.
+- Writing a web application using just node.js http module can be tedious and time-consuming, as it requires a lot of boilerplate code to handle routing, middleware, and other common tasks.
+- Express.js provides easy debugging, routing, middleware support, maintainability, etc.
+
+#### Terminologies
+
+1. IP Address: An IP address is a unique identifier assigned to each device connected to a network that uses the Internet Protocol for communication.
+
+2. DNS: The Domain Name System (DNS) is a hierarchical and decentralized naming system for computers, services, or other resources connected to the internet or a private network. It translates human-readable domain names (like www.example.com) into IP addresses that computers use to identify each other on the network.
+
+3. PORT: A port is a communication endpoint that allows different applications or services to communicate with each other over a network. It is identified by a number between 0 and 65535. Some ports like 80 (HTTP) and 443 (HTTPS) are reserved for specific protocols, while others can be used by any application.
+
+4. HTTP Methods: HTTP methods are a set of request methods used in the Hypertext Transfer Protocol (HTTP) to indicate the desired action to be performed on a resource. The most commonly used HTTP methods are GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS, and TRACE.
+
+5. REST API: REST (Representational State Transfer) is an architectural style for designing networked applications. A REST API (Application Programming Interface) is a web service that follows the principles of REST and allows clients to interact with resources using standard HTTP methods.
+
+6. Restful API: A RESTful API is an API that adheres to the principles of REST. It uses standard HTTP methods and status codes, and represents resources using URIs (Uniform Resource Identifiers).
+
+7. URL Vs URI: A URL (Uniform Resource Locator) is a specific type of URI (Uniform Resource Identifier) that provides the location of a resource on the internet. A URI can be either a URL or a URN (Uniform Resource Name), which is a unique identifier for a resource that does not provide its location.
