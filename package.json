@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/githubscientist/be-fsdcwetb23#readme",
   "dependencies": {
+    "express": "^5.1.0",
     "morgan": "^1.10.1"
   },
   "devDependencies": {
