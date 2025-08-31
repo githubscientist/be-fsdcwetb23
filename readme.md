@@ -99,3 +99,14 @@ DevDependencies are the libraries or modules that are only required for developm
 6. Restful API: A RESTful API is an API that adheres to the principles of REST. It uses standard HTTP methods and status codes, and represents resources using URIs (Uniform Resource Identifiers).
 
 7. URL Vs URI: A URL (Uniform Resource Locator) is a specific type of URI (Uniform Resource Identifier) that provides the location of a resource on the internet. A URI can be either a URL or a URN (Uniform Resource Name), which is a unique identifier for a resource that does not provide its location.
+
+#### Common HTTP Methods for RESTful APIs
+
+##### Todo List Application
+
+GET /todos - Retrieve a list of all todo items.
+GET /todos/:id - Retrieve a specific todo item by its ID.
+POST /todos - Create a new todo item.
+PATCH /todos/:id - Update a specific todo item by its ID.
+PUT /todos/:id - Replace a specific todo item by its ID.
+DELETE /todos/:id - Delete a specific todo item by its ID.
