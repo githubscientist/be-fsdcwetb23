@@ -1,4 +1,4 @@
-const notes = [
+const todos = [
     {
         "createdAt": "2025-07-19T05:44:16.422Z",
         "content": "Complete the MERN Course by End of Next Week!",
@@ -43,4 +43,4 @@ const notes = [
     }
 ]
 
-module.exports = notes;
+module.exports = todos;
