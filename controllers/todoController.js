@@ -45,7 +45,7 @@ const todoController = {
                 isCompleted: false
             }
 
-            // pushe the new todo object to the todos array
+            // push the new todo object to the todos array
             todos.push(newTodo);
 
             // send the successful response with the new todo
@@ -55,6 +55,54 @@ const todoController = {
             })
         } catch (error) {
             res.status(500).json({ message: 'error creating a new todo' });
+        }
+    },
+    updateTodo: async (req, res) => {
+        try {
+            // get the id from the request parameters
+            const todoID = req.params.id;
+
+            // get the content and isCompleted from the equest body
+            const { content, isCompleted } = req.body;
+
+            const todoIndex = todos.findIndex(todo => todo.id === todoID);
+
+            if (todoIndex !== -1) {
+                // update the todo object at the found index
+                if (content !== undefined) {
+                    todos[todoIndex].content = content;
+                }
+
+                if (isCompleted !== undefined) {
+                    todos[todoIndex].isCompleted = isCompleted;
+                }
+
+                res.json({ message: `todo with id:${todoID} updated successfully`, data: todos[todoIndex] });
+            } else {
+                return res.status(404).json({ message: `todo with id:${todoID} is not found` });
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'error updating the todo by ID' });
+        }
+    },
+    deleteTodoByID: async (req, res) => {
+        try {
+            // get the id from the request parameters
+            const todoID = req.params.id;
+
+            // find the index of the todo with the matching id
+            const todoIndex = todos.findIndex(todo => todo.id === todoID);
+
+            if (todoIndex !== -1) {
+                // remove the todo object from the array at the found index
+                const deletedTodo = todos.splice(todoIndex, 1);
+
+                res.json({ message: `todo with id:${todoID} deleted successfully`, data: deletedTodo[0] });
+            } else {
+                return res.status(404).json({ message: `todo with id:${todoID} is not found` });
+            }
+        } catch (error) {
+            res.status(500).json({ message: 'error deleting the todo by ID' });
         }
     }
 }
