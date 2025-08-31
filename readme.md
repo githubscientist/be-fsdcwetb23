@@ -110,3 +110,5 @@ POST /todos - Create a new todo item.
 PATCH /todos/:id - Update a specific todo item by its ID.
 PUT /todos/:id - Replace a specific todo item by its ID.
 DELETE /todos/:id - Delete a specific todo item by its ID.
+
+body-parser: A middleware for parsing incoming request bodies in a middleware before your handlers, available under the req.body property.

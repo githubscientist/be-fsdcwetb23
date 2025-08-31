@@ -25,6 +25,37 @@ const todoController = {
         } catch (error) {
             res.status(500).json({ message: 'error fetching the todo by ID' });
         }
+    },
+    createTodo: async (req, res) => {
+        try {
+            // get the content from the request body
+            const { content } = req.body;
+
+            // generate a new id for the todo from the last todo item in the array
+            const newID = parseInt(todos[todos.length - 1].id) + 1;
+
+            // create a timestamp for the createdAt field with 2025-07-25T19:13:03.665Z
+            const createdAt = new Date().toISOString();
+
+            // create a new todo object
+            const newTodo = {
+                id: newID.toString(),
+                createdAt: createdAt,
+                content: content,
+                isCompleted: false
+            }
+
+            // pushe the new todo object to the todos array
+            todos.push(newTodo);
+
+            // send the successful response with the new todo
+            res.status(201).json({
+                message: 'new todo created successfully',
+                data: newTodo
+            })
+        } catch (error) {
+            res.status(500).json({ message: 'error creating a new todo' });
+        }
     }
 }
 
